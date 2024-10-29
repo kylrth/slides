@@ -1,0 +1,7 @@
+{
+    "name": "revealjs-docker",
+    "dependencies": {
+        "reveal.js": "=5.1.0",
+        "reveal-md": "=6.1.3"
+    }
+}

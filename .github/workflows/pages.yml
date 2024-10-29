@@ -1,0 +1,49 @@
+name: Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/kylrth/slides:main
+      volumes:
+        - slides:/slides:ro
+        - static:/static
+      options: --user root
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: build static files
+        run: npx reveal-md ./slides --static ./static
+      - name: copy assets
+        run: rm -rf static/predoc && cp -r slides/predoc static/predoc
+      # TODO use --static-dirs=predoc when they fix it
+      # https://github.com/webpro/reveal-md/issues/498
+
+      # actions/upload-pages-artifact needs GNU tar
+      - name: install GNU tar
+        run: apk add tar
+
+      - name: setup GitHub Pages
+        uses: actions/configure-pages@v5
+        if: github.ref == 'refs/heads/main'
+      - name: upload artifact
+        uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: './static'
+      - name: deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        if: github.ref == 'refs/heads/main'

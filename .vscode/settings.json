@@ -1,0 +1,6 @@
+{
+    "markdownlint.config": {
+        "MD025": false, // slides have many h1 headers
+        "MD035": false, // vertical slides use ----
+    }
+}
