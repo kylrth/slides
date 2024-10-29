@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>general tools for machine learning research</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/slides/old-remark.css" />
+</head>
+
+<body>
+    <textarea id="source">
+
+name: title
+class: title, middle
+
+<br /><br />
+# general tools for ML research
+
+<br /><br />
+### .gray224[January 16th, 2023]
+
+Kyle Roth
+
+---
+
+## What should we discuss today?
+
+- Visual Studio Code
+- Git workflows
+- Jupyter notebooks vs .py files
+- PyTorch vs TensorFlow
+- other Python packages
+- experiment directories
+- literature tools
+- organizational tools
+
+---
+
+## Visual Studio Code
+
+- extensions
+  - Remote - SSH
+  - LaTeX Workshop
+  - IntelliCode
+  - Live Share
+- visual Git tools
+- debugger
+
+---
+
+## Git workflows
+
+### `git rebase` vs `git merge`
+
+.center[![:scale 50%](git.png)]
+
+- interactive rebase
+- PRs, GitHub repo settings, etc.
+
+---
+
+## Jupyter notebooks vs .py files
+
+- quick poll
+- advantages of Jupyter:
+  - variables stay loaded (faster runtimes while experimenting)
+- advantages of plain .py:
+  - no state to keep track of
+  - tests
+  - easier to manage with Git
+
+---
+
+## PyTorch vs TensorFlow
+
+quick poll
+
+---
+
+## other Python packages
+
+- [WandB.ai](https://wandb.ai)
+- What else?
+
+---
+
+## experiment directories
+
+How do you structure your experiments on disk?
+
+How do you manage that code with Git?
+
+---
+
+## literature tools
+
+- Zotero
+- What else?
+
+---
+
+## organizational tools
+
+- task lists (GTasks, Nozbe, what else?)
+- kanban boards (e.g. GitHub projects)
+
+	</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.3/katex.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.3/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.3/katex.min.css">
+    <script type="text/javascript">
+
+        var options = {
+            ratio: "16:9",
+            countIncrementalSlides: false,
+        };
+
+        // LaTeX
+        var renderMath = function () {
+            renderMathInElement(document.body, {
+                delimiters: [ // mind the order of delimiters(!?)
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\[", right: "\\]", display: true },
+                    { left: "\\(", right: "\\)", display: false },
+                ]
+            });
+        }
+
+        remark.macros.scale = function (percentage) {
+            var url = this;
+            return '<img src="' + url + '" style="width: ' + percentage + '" />';
+        };
+
+        var slideshow = remark.create(options, renderMath);
+
+    </script>
+</body>

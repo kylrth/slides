@@ -27,7 +27,7 @@ jobs:
       - name: build static files
         run: npx reveal-md ./slides --static ./static
       - name: copy assets
-        run: rm -rf static/predoc && cp -r slides/predoc static/predoc
+        run: apk add rsync && rsync -av --delete slides/predoc/ static/predoc/ && rsync -av assets/ static/
       # TODO use --static-dirs=predoc when they fix it
       # https://github.com/webpro/reveal-md/issues/498
 

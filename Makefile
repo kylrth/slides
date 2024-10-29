@@ -9,7 +9,8 @@ static:
 		-v $(shell pwd)/slides:/slides:ro \
 		-v $(shell pwd)/static:/static \
 		ghcr.io/kylrth/slides:main /slides --static /static
-	rm -rf static/predoc && cp -r slides/predoc static/predoc
+	rsync -av --delete slides/predoc/ static/predoc/
+	rsync -av assets/ static/
 # TODO use --static-dirs=predoc when they fix it
 # https://github.com/webpro/reveal-md/issues/498
 

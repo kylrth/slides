@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>IFT 6759 Git tutorial</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="/slides/old-remark.css" />
+</head>
+
+<body>
+  <textarea id="source">
+
+name: title
+class: title, middle
+
+## IFT 6759
+## projets avancés en apprentissage automatique
+
+### .gray224[January 20th, 2023]
+<br />
+### .gray224[Git tutorial]
+<br />
+.center[
+<a href="http://www.umontreal.ca/"><img src="udem-white.png" alt="Université de Montréal" style="height: 4em"></a>
+]
+Kyle Roth
+
+.footer[slides adapted from [these](https://alexhernandezgarcia.github.io/teaching/mlprojects/slides/20220114-git) by Alex Hernández-García]
+
+---
+
+## class goals
+
+This class will be a mix of lecture and hands-on tutorial.
+I'd recommend pulling out your laptops if you have them, so you can follow along.
+
+The goal is that at the end of the class:
+
+* You understand what .highlight1[Git] and .highlight1[GitHub] are.
+* You understand .highlight1[why they are useful] and important for software development, including ML projects.
+* You understand more details of .highlight1[how Git works].
+* You understand common .highlight1[collaboration workflows].
+* You know how to find more resources .highlight1[on your own].
+
+--
+
+This class will _not_ make you a Git expert.
+There are too many tools and options to explore in two hours!
+
+???
+
+- I am aware that many of you are already familiar with Git, but the goal is to have everyone on the same page.
+
+---
+
+## What is Git?
+
+Git is a [version control system](https://en.wikipedia.org/wiki/Version_control) (VCS).
+
+--
+
+_Version control_ is a class of systems to manage changes to software, websites, documents, etc.
+Most version control systems allow you to do the following:
+
+* Revert files to older versions.
+* View how a certain file or function changed over time.
+* Work on new features without touching the _official_ version.
+* Collaborate with distributed teams.
+* Have your files securely backed up.
+
+--
+
+Git, Subversion, and SVN are the most common versioning tools, but Git is by far the most popular.*
+
+.references[*[93% adoption](https://en.wikipedia.org/wiki/Git#Adoption) as of 2022 according to the StackOverflow developer survey]
+
+---
+
+## installing Git
+
+There exist graphical user interfaces for Git, and you can use them if you like.
+However, the .highlight1[command line] version is:
+
+* common to all systems
+* feature complete
+* used by nearly all tutorials and discussion online
+* probably the best way to learn
+
+--
+
+What is everyone's comfort level with the command line, not just for Git?
+
+How many of you have used Visual Studio Code before?
+
+---
+
+count: false
+
+## installing Git
+
+There exist graphical user interfaces for Git, and you can use them if you like.
+However, the .highlight1[command line] version is:
+
+* common to all systems
+* feature complete
+* used by nearly all tutorials and discussion online
+* probably the best way to learn
+
+.highlight1[If you do not have Git installed in your computer, this is the time for it:]
+
+.center[[github.com/git-guides/install-git](https://github.com/git-guides/install-git)]
+
+---
+
+## configuring Git
+
+If this is the first time you are using Git, it is worth taking a few minutes to set up your Git environment.
+The `git config` subcommand allows you to manage Git settings.
+
+--
+
+<br />
+To view all your settings:
+
+```bash
+$ git config --list --show-origin
+```
+
+--
+
+To set your name and email:
+
+```bash
+$ git config --global user.name "Kyle Roth"
+$ git config --global user.email kyle.roth@umontreal.ca
+```
+
+---
+
+## configuring Git
+
+If this is the first time you are using Git, it is worth taking a few minutes to set up your Git environment.
+The `git config` subcommand allows you to manage Git settings.
+
+<br />
+Certain Git commands will open a text editor to take user input from you.
+To set your preferred editor:
+
+```bash
+$ git config --global core.editor vim
+```
+
+(Or instead add `export VISUAL=/usr/bin/vim` to your `~/.bashrc` to set the default text editor system-wide.)
+
+--
+
+<br />
+This guide has more details on configuration:
+
+.center[[https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)]
+
+---
+
+## How does Git work?
+
+### a stream of snapshots (commits)
+
+.context[Git thinks of its data like a series of snapshots of a file tree.]
+
+.center[![:scale 60%](snapshots.png)]
+
+.references[Source: Pro Git book, [1.3 Getting Started - What is Git?](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F)]
+
+--
+
+When we start a software project, we usually store all the relevant code and documentation in a folder:
+
+```txt
+[kyle@computer repo]$ ls -a
+.  ..  cmd  collect.go  go.mod  go.sum  Makefile  README.md  task.go
+```
+
+---
+
+## How does Git work?
+
+### a stream of snapshots (commits)
+
+.context[Git thinks of its data like a series of snapshots of a file tree.]
+
+.center[![:scale 60%](snapshots.png)]
+
+Once you've initialized a repository, Git stores its data in the `.git/` subdirectory:
+
+```txt
+[kyle@computer repo]$ git init
+Initialized empty Git repository in /home/kyle/repo/.git/
+[kyle@computer repo]$ ls -a
+.  ..  cmd  collect.go  .git  go.mod  go.sum  Makefile  README.md  task.go
+
+```
+
+.references[Source: Pro Git book, [1.3 Getting Started - What is Git?](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F)]
+
+---
+
+## How does Git work?
+
+### repositories
+
+When we want to share code with others, we publish the `.git` directory, which contains the history (the series of commits) of the contents of your folder.
+
+--
+
+If multiple people contribute to a project, they all need to be able to pull from each other's repositories to include each other's code in their repository.
+
+--
+
+The repository on your computer is called the *local repository*, and a repository anywhere else is called a *remote repository*.
+
+Most projects have a single central repository that is regarded as the "official" copy, and everyone pushes and pulls from that.
+
+```sh
+[kyle@computer repo]$ git remote -v
+origin	git@github.com:kylrth/repo.git (fetch)
+origin	git@github.com:kylrth/repo.git (push)
+```
+
+???
+
+But Git was written with a more distributed workflow in mind, where people could push and pull from each other's repositories.
+
+---
+
+## What is GitHub?
+
+GitHub, Inc.---now a subsidiary of Microsoft---is a company that hosts remote Git repositories on the internet.
+
+They provide free hosting for open source projects, and offer paid subscriptions for individuals and organizations that want private repositories.
+
+GitHub is extremely popular among software developers and computer scientists.
+
+--
+
+.highlight1[If you do not have a GitHub account, this is the time to make one]:
+
+.center[[github.com/signup](https://github.com/signup)]
+
+---
+
+## terminology
+
+### repository
+
+On a computer, a repository is a directory (a folder) that has a `.git` subdirectory.
+
+A bare repository (created with `git init --bare`) is just the `.git` folder (no working tree).
+
+GitHub repositories are linked to URLs, and they can be _public_ or _private_.
+
+???
+
+Bare repositories usually end with .git, which is what you see on GitHub URLs.
+
+--
+
+### fork
+
+A fork is a copy of a repository.
+Forking a repository allows you to freely experiment with changes without affecting the original project.
+.cite[[(read more)](https://docs.github.com/en/get-started/quickstart/fork-a-repo)]
+
+---
+
+## GitHub repositories
+### cloning a repository
+
+_Cloning_ a repository means making a **local copy** of the repository on your machine.
+Cloning downloads both the files and the Git history from a remote repository.
+
+---
+
+## Git in more detail
+### the three states
+
+In your local repository, Git has three main states that your files can be in:
+
+* `modified`: you have changed the file but have not committed it to your database yet.
+* `staged`: you have marked a modified file in its current version to go into your next **commit** snapshot.
+* `committed`: the data is safely stored in your local database.
+
+.center[![:scale 45%](areas.png)]
+
+.references[Source: Pro Git book, [1.3 Getting Started - What is Git?](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F)]
+
+---
+
+## basic workflow
+### 1. `git status`
+
+.context[the simplest use case, without collaborators]
+
+`git status` tells us which files are in which state.
+It is a good practice to run this command often, especially during the learning phase, to keep track of what is going on in your repository.
+
+It may take you a while to understand all the information from `git status`, but you will usually find the information you need.
+
+--
+
+This is what you should see in a freshly cloned repository:
+
+```bash
+$ git status
+On branch main
+Your branch is up-to-date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+---
+
+## basic workflow
+### 2. work on your project
+
+.context[the simplest use case, without collaborators]
+
+After _modifying_ a file, `git status` will show something new and informative:
+
+```bash
+On branch main
+Your branch is up-to-date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+---
+
+## basic workflow
+### 3. `git add`
+
+.context[the simplest use case, without collaborators]
+
+ _Adding_ a file means to _stage_ a change, in Git's vocabulary.
+ Changes may be a modification to a file in the repository or _adding_ a new file to be tracked.
+ It can be seen as a pre-step to _really_ saving the changes to the repository.
+ This may sound complicated now, but [there are good reasons for it](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository).
+ Add `README.md`:
+
+```bash
+$ git add README.md
+```
+
+--
+
+Run `git status` again to see what changed.
+
+```bash
+On branch main
+Your branch is up-to-date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   README.md
+```
+
+Now `README.md` is under _Changes to be committed_. What does that mean?
+
+---
+
+## basic workflow
+### 4. `git commit`
+
+.context[the simplest use case, without collaborators]
+
+Now we could continue working, adding more changes, perhaps in other files, and eventually we would like to _commit_ our changes to the repository so that the version control can keep track of them.
+.highlight1[_Committing_ changes means to save a snapshot of the current state of our repository], with a time stamp and all the necessary things that will allow us to go back to this point in the future, and many other important possible actions.
+To commit our changes, we have to add a message describing the changes.
+
+```bash
+$ git commit
+```
+
+This opens a text editor where you can enter the message.
+There's a shortcut as well if your message is short:
+
+```bash
+$ git commit -m "add name to list"
+```
+
+You may want to run `git status` again.
+
+---
+
+## basic workflow
+
+### A good commit...
+
+--
+
+- contains a single semantic change
+- includes any tests for that change
+- passes all tests in the repo
+- has a descriptive and detailed commit message
+
+---
+
+## basic workflow
+### The life cycle of Git files
+
+Files in a Git repository can be in one of these two stages:
+
+* `tracked`: files that were in the last snapshot, as well as any newly staged files; they can be `unmodified`, `modified`, or `staged`. In short, tracked files are files that Git knows about.
+* `untracked`: any file that has never been added with `git add`.
+
+As you edit, add, stage, commit, or remove files, they can be at different states:
+
+.center[![:scale 45%](lifecycle.png)]
+
+.references[Source: Pro Git book, [2.2 Git Basics - Recording Changes to the Repository](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository)]
+
+---
+
+## basic workflow
+### 5. `git push`
+
+.context[the simplest use case, without collaborators]
+
+All we have done now has been local, meaning that we have not yet posted our changes online so that others or ourselves can access it.
+We could continue working and adding and committing our changes, or we can _push_ the history of our changes now.
+The default way of pushing is simply:
+
+```bash
+$ git push
+```
+
+You may be asked for your username and credentials at this point.
+
+Now your new commits are online!
+
+---
+
+## Git collaboration flow
+### pull requests (PRs)
+
+PRs let you tell others about changes you have pushed to a **branch** in a repository on GitHub.
+Typically, after a PR is open, someone else in the team will review the changes, discuss issues, and eventually merge the branches.
+
+A good pull request
+
+- contains a series of commits that are semantically distinct
+- only contains code for a single feature
+- can be reviewed in one sitting (ideally +1000 -1000 max)
+- has a clear description
+
+???
+
+TODO find a good example online with resolved comments and stuff
+
+---
+
+name: title
+class: title, middle
+
+## IFT 6759
+## projets avancés en apprentissage automatique
+
+.bigger[.bigger[.highlight1[Break: 10 minutes]]]
+
+---
+
+## branching
+
+.context[So far, we have only worked within the `main` branch]
+
+Branching means you diverge from the main line of development and continue to do work without messing with that main line.
+Branching in Git is a lightweight process and it is one of its main features.
+
+--
+
+.left-column-66[
+.center[![:scale 90%](branch-and-history.png)]
+]
+.right-column-33[
+* `HEAD` is a reference to the last commit in the current branch.
+* `v1.0` and `main` are branches (which happen to have identical histories)
+* `98ca9`, `34ac2` and `f30ab` are commits
+]
+
+---
+
+## branching
+
+.left-column[
+To see your branches:
+
+```bash
+$ git branch
+```
+
+To create a new branch:
+
+```bash
+$ git branch kyle/feature-a
+```
+
+To switch branches:
+
+```bash
+$ git checkout kyle/feature-a
+```
+
+To create and switch branches:
+
+```bash
+$ git branch -b kyle/feature-a
+```
+]
+
+--
+
+.right-column[
+To push a branch to the remote repository:
+
+```bash
+git push -u origin kyle/feature-a
+```
+
+The `-u` means `--set-upstream`, so that Git knows what a simple `git push` means in the future.
+]
+
+???
+
+It's a common convention to name branches by their owner.
+
+---
+
+## merge vs rebase
+
+.center[![:scale 80%](merge-rebase_masked.png)]
+
+---
+
+## merge vs rebase
+
+.center[![:scale 80%](merge-rebase_half.png)]
+
+---
+
+## merge vs rebase
+
+.center[![:scale 80%](merge-rebase.png)]
+
+---
+
+## merge vs rebase
+
+To merge branch `kyle/feature-a` into branch `main`:
+
+```bash
+$ git checkout main
+$ git merge kyle/feature-a
+```
+
+To rebase:
+
+```bash
+$ git rebase kyle/feature-a
+```
+
+--
+
+What if the changes conflict?
+
+---
+
+## merge vs rebase
+
+### merge conflicts
+
+Merging branches is sometimes a smooth action, but if two branches alter the same section of code often it's not clear how both changes should be applied.
+
+```bash
+$ git merge kyle/feature-a
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+To read more: [Pro Git: Basic Branching and Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
+
+???
+
+TODO set up a good example to walk through resolving a merge conflict
+
+---
+
+## merge vs rebase
+
+So which is better?
+
+--
+
+- Merge commits keep a separate record of the changes that were needed to combine the branches.
+- Rebasing forces the author to take into account the latest updates on `main` when designing the series of commits in the pull request, resulting in a cleaner history.
+
+---
+
+## interactive rebase
+
+```bash
+git rebase -i
+```
+
+???
+
+TODO set up a good example for this
+
+---
+
+## Git collaborative workflow
+### in summary
+
+1. Create a new branch to make your changes.
+1. As you make changes, make some commits to improve the project.
+1. Push your changes into your copy (fork) of the repository.
+1. Open a pull request to merge your branch into another branch or into another repository.
+1. Discuss, and optionally continue committing changes.
+1. The project owner merges or closes the pull request.
+
+.references[To read more: Pro Git book, [5.2 Distributed Git - Contributing to a Project](https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project)]
+
+---
+
+## work in breakout rooms
+
+Ideas to play around and gain expertise:
+
+- Create your own repository.
+- Create new branches in your repository, make changes and merge branches.
+- Fork each other's repository and open pull requests, review and merge the changes.
+- Add each other as collaborators of your repository
+- Try to make conflicting changes across branches and resolve them.
+- [Sync an upstream repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-from-the-command-line).
+
+	</textarea>
+  <!-- <script src="remark-latest.min.js"></script> -->
+  <!-- <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script> -->
+  <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.3/katex.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.3/contrib/auto-render.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.3/katex.min.css">
+  <script type="text/javascript">
+
+    var options = {
+      ratio: "16:9",
+      countIncrementalSlides: false,
+    };
+
+    // LaTeX
+    var renderMath = function () {
+      renderMathInElement(document.body, {
+        delimiters: [ // mind the order of delimiters(!?)
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\[", right: "\\]", display: true },
+          { left: "\\(", right: "\\)", display: false },
+        ]
+      });
+    }
+
+    remark.macros.scale = function (percentage) {
+      var url = this;
+      return '<img src="' + url + '" style="width: ' + percentage + '" />';
+    };
+
+    var slideshow = remark.create(options, renderMath);
+
+  </script>
+</body>

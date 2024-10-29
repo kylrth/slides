@@ -1,0 +1,367 @@
+/* This was borrowed from Alex Hernández García's slides, e.g. here:
+    https://alexhernandezgarcia.github.io/teaching/mlprojects/slides/20220114-git
+ */
+
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+/* Color variables */
+:root {
+    --white: #FFFFFF;
+    --gray224: rgb(224, 224, 224);
+    --gray192: rgb(192, 192, 192);
+    --gray160: rgb(160, 160, 160);
+    --gray128: rgb(128, 128, 128);
+    --gray96: rgb(96, 96, 96);
+    --gray64: rgb(64, 64, 64);
+    --gray32: rgb(32, 32, 32);
+    --darkgray: #55707D;
+    --grayblue: #45374f;
+    --lightblue: #6FA8DC;
+    --paleblue: #A4C2F4;
+    --lightgreen: #93C47D;
+    --cyan: #6D9EEB;
+    --orange: #F09D70;
+    --lightturquoise: #cbffff;
+    --turquoise: #82cfbe;
+    --darkturquoise: #05ae9b;
+    --beige: #f6f2eb;
+    --purple: #6d006e;
+    --darkpurple: #3b0a3f;
+    --darkestpurple: #260f2c;
+}
+
+/* Colors */
+.highlight1 {
+    color: var(--lightblue);
+}
+
+.highlight2 {
+    color: var(--darkturquoise);
+}
+
+.white {
+    color: var(--white);
+}
+
+.gray224 {
+    color: var(--gray224);
+}
+
+.gray192 {
+    color: var(--gray192);
+}
+
+.gray160 {
+    color: var(--gray160);
+}
+
+.gray128 {
+    color: var(--gray128);
+}
+
+.gray96 {
+    color: var(--gray96);
+}
+
+.gray64 {
+    color: var(--gray64);
+}
+
+.gray32 {
+    color: var(--gray32);
+}
+
+.darkgray {
+    color: var(--darkgray);
+}
+
+.grayblue {
+    color: var(--grayblue);
+}
+
+.lightblue {
+    color: var(--lightblue);
+}
+
+.paleblue {
+    color: var(--paleblue);
+}
+
+.lightgreen {
+    color: var(--lightgreen);
+}
+
+.cyan {
+    color: var(--cyan);
+}
+
+.orange {
+    color: var(--orange);
+}
+
+.lightturquoise {
+    color: var(--lightturquoise);
+}
+
+.turquoise {
+    color: var(--turquoise);
+}
+
+.darkturquoise {
+    color: var(--darkturquoise);
+}
+
+.beige {
+    color: var(--beige);
+}
+
+.purple {
+    color: var(--purple);
+}
+
+.darkpurple {
+    color: var(--darkpurple);
+}
+
+.darkestpurple {
+    color: var(--darkestpurple);
+}
+
+/* General appearance */
+.remark-slide-content {
+    font-size: 1.5em;
+    background: var(--grayblue);
+    /* slides background color */
+    color: var(--white);
+    /* main font color */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Hyperlinks */
+a,
+a>code {
+    color: var(--lightblue);
+    text-decoration: underline;
+}
+
+a:hover {
+    color: var(--paleblue);
+}
+
+body {
+    font-family: 'Oswald';
+    font-size: 1.0em;
+    font-weight: 100;
+    letter-spacing: 0.03rem;
+    color: #f6f2eb;
+}
+
+body strong {
+    font-weight: 900;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Oswald';
+    font-weight: 400;
+    margin-bottom: 0;
+    color: var(--beige);
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    margin-top: 0em;
+}
+
+h3 {
+    margin-top: 0em;
+    font-size: 80%;
+    font-style: italic;
+}
+
+h4 {
+    margin-top: 0em;
+    font-size: 120%;
+    font-style: italic;
+}
+
+li:not(li li) {
+    margin-bottom: 0.25em;
+}
+
+/* class tighter */
+.tighter li:not(li li) {
+    margin-bottom: 0em;
+}
+
+/* Size */
+.bigger {
+    font-size: 120%;
+}
+
+.smaller {
+    font-size: 80%;
+}
+
+/* Transparency */
+.alpha0 {
+    opacity: 0%;
+}
+
+.alpha10 {
+    opacity: 10%;
+}
+
+.alpha50 {
+    opacity: 50%;
+}
+
+/* Footnote */
+.footnote {
+    position: absolute;
+    bottom: 1em;
+    left: 2em;
+}
+
+.footer {
+    vertical-align: bottom;
+    text-align: center;
+    color: lightblue;
+}
+
+/* Context box */
+.context {
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    max-width: 45%;
+    padding: 0.5em;
+    border: 0.1em solid var(--beige);
+    text-align: justify;
+}
+
+.context35 {
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    max-width: 35%;
+    padding: 0.5em;
+    border: 0.1em solid var(--beige);
+    text-align: justify;
+}
+
+/* Conclusion box */
+.conclusion {
+    text-align: center;
+    color: var(--lightblue);
+    display: table;
+    margin: 0 auto;
+    padding: 0.5em;
+    border: 0.1em solid var(--lightblue);
+}
+
+/* Citations */
+.cite {
+    color: var(--gray192);
+    font-size: 80%;
+}
+
+.cite a {
+    color: inherit;
+}
+
+.cite a:hover {
+    color: var(--paleblue);
+}
+
+/* List of references in slide */
+.references {
+    position: absolute;
+    bottom: 1em;
+    left: 2em;
+    color: var(--gray192);
+    font-size: 80%;
+}
+
+.references a {
+    color: inherit;
+}
+
+.references a:hover {
+    color: var(--paleblue);
+}
+
+/* class title */
+.title {
+    text-align: center
+}
+
+/* Two-column layouts */
+.left-column {
+    width: 49%;
+    float: left;
+}
+
+.right-column {
+    width: 49%;
+    float: right;
+}
+
+.left-column-33 {
+    width: 33%;
+    float: left;
+}
+
+.right-column-66 {
+    width: 66%;
+    float: right;
+}
+
+.left-column-66 {
+    width: 66%;
+    float: left;
+}
+
+.right-column-33 {
+    width: 33%;
+    float: right;
+}
+
+.right-column~p {
+    clear: both;
+}
+
+.right-column~ul {
+    clear: both;
+}
+
+.full-width {
+    width: 100%;
+    display: flow-root;
+}
+
+/* Three-column layouts */
+.columns-3-left {
+    width: 32%;
+    float: left;
+}
+
+.columns-3-center {
+    width: 32%;
+    display: inline-block;
+}
+
+.columns-3-right {
+    width: 32%;
+    float: right;
+}
