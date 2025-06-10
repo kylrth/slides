@@ -70,15 +70,7 @@ Analogy-Augmented Generation
 
 ## chef François at PAKDD
 
-< insert image of tasty food from the welcome reception >
-
-----
-<!-- .slide: id="chef-happy" -->
-<!-- .slide: data-auto-animate -->
-
-## chef François at PAKDD
-
-< insert image of tasty food from the welcome reception with our faces appreciating the food >
+![lunch at PAKDD](pakdd/food.jpg)
 
 ---
 <!-- .slide: id="task" -->
@@ -154,43 +146,6 @@ Procedure(
 2M+ recipes scraped from the internet, we use a random selection of 10k
 
 ----
-<!-- .slide: id="lcstep" -->
-<!-- .slide: data-auto-animate -->
-
-## ## datasets
-
-### ### LCStep
-
-<pre data-id="code"><code data-trim data-line-numbers>
-Procedure(
-    input_="an LLM",
-    output="set up a custom input schema for a tool with strict requirements and custom validation logic",
-    steps=[
-        "Define a class `ToolInputSchema` that inherits from `pydantic.BaseModel`. Include the fields you require, in this case a URL, and a root validator method that checks the domain of the URL against a list of approved domains.",
-        ...
-    ],
-)
-</code></pre>
-
-276 procedures extracted from LangChain Python docs using GPT-4
-
-<span class="fragment highlight-red" data-fragment-index="1">
-    <span class="fragment" data-fragment-index="1">For all experiments, we used a version of GPT-3.5 with a cutoff date before the public release of LangChain.</span>
-<span>
-
-Note:
-This dataset is a good test of our system's ability to produce good results for a topic unfamiliar to the frozen LLM.
-
-----
-<!-- .slide: data-auto-animate -->
-
-### ### LCStep
-
-#### #### data preparation
-
-![flow chart documenting the process of producing the LCStep dataset](predoc/aag/lcstep.drawio.svg)
-
-----
 <!-- .slide: id="champ" -->
 
 ## ## datasets
@@ -209,6 +164,43 @@ Procedure(
 </code></pre>
 
 270 competition-level math problems with step-by-step solutions
+
+----
+<!-- .slide: id="lcstep" -->
+<!-- .slide: data-auto-animate -->
+
+## ## datasets
+
+### ### LCStep
+
+<pre data-id="code"><code data-trim data-line-numbers>
+Procedure(
+    input_="an LLM",
+    output="set up a custom input schema for a tool with strict requirements and custom validation logic",
+    steps=[
+        "Define a class `ToolInputSchema` that inherits from `pydantic.BaseModel`. Include the fields you require, in this case a URL, and a root validator method that checks the domain of the URL against a list of approved domains.",
+        ...
+    ],
+)
+</code></pre>
+
+276 procedures extracted from LangChain Python docs
+
+<span class="fragment highlight-red" data-fragment-index="1">
+    <span class="fragment" data-fragment-index="1">For all experiments, we used a version of GPT-3.5 with a cutoff date before the public release of LangChain.</span>
+<span>
+
+Note:
+This dataset is a good test of our system's ability to produce good results for a topic unfamiliar to the frozen LLM.
+
+----
+<!-- .slide: data-auto-animate -->
+
+### ### LCStep
+
+#### #### data preparation
+
+![flow chart documenting the process of producing the LCStep dataset](predoc/aag/lcstep.drawio.svg)
 
 ---
 <!-- .slide: id="method" -->
