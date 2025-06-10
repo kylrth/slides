@@ -212,17 +212,55 @@ Procedure(
 
 ---
 <!-- .slide: id="method" -->
+<!-- .slide: data-auto-animate -->
 
 ## ## pipeline
 
 <img src="pakdd/aag_diagram.png" alt="AAG system design using query re-writing, summarization, and self-critique" style="background-color:#FFFFFF;" />
 
-Note:
+----
+<!-- .slide: id="method" -->
+<!-- .slide: data-auto-animate -->
 
-- procedure memory
-- RAG candidate
-- query rewriting
-- self-critique
+## ## pipeline
+
+<div style="display: flex; justify-content: space-between;">
+  <figure style="width: 35%; font-size: 50%">
+    <u>Autumn Soup (microwave recipe)</u>
+    <ol>
+      <li><b>Microwave cooking times for ground beef</b></li>
+      <ul>
+        <li style="font-size: 75%">Ground Beef Casserole OAMC</li>
+      </ul>
+      <li><b>How to properly drain excess fat from cooked ground beef?</b></li>
+      <ul>
+        <li style="font-size: 75%">Ground Beef Casserole OAMC</li>
+      </ul>
+      <li><b>Microwave cooking times for potatoes and carrots</b></li>
+      <ul>
+        <li style="font-size: 75%">Braised Potatoes And Carrots</li>
+        <li style="font-size: 75%">Microwave Scalloped Potatoes</li>
+        <li style="font-size: 75%">Fast Roasted Potatoes With Paprika</li>
+      </ul>
+      <li><b>How to know when vegetables are tender in the microwave?</b></li>
+      <ul>
+        <li style="font-size: 75%">Microwave Scalloped Potatoes</li>
+        <li style="font-size: 75%">Fast Roasted Potatoes With Paprika</li>
+        <li style="font-size: 75%">Braised Potatoes And Carrots</li>
+      </ul>
+    </ol>
+  </figure>
+  <figure style="width: 65%; text-align: center; margin=0;">
+    <img src="pakdd/aag_diagram.png" alt="AAG system design using query re-writing, summarization, and self-critique" style="background-color:#FFFFFF;" />
+  </figure>
+</div>
+
+----
+<!-- .slide: data-auto-animate -->
+
+## ## pipeline
+
+<img src="pakdd/aag_diagram.png" alt="AAG system design using query re-writing, summarization, and self-critique" style="background-color:#FFFFFF;" />
 
 ---
 <!-- .slide: id="experiments" -->
