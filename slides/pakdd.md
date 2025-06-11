@@ -200,7 +200,7 @@ This dataset is a good test of our system's ability to produce good results for 
 
 #### #### data preparation
 
-![flow chart documenting the process of producing the LCStep dataset](predoc/aag/lcstep.drawio.svg)
+![flow chart documenting the process of producing the LCStep dataset](pakdd/lcstep.drawio.svg)
 
 ---
 <!-- .slide: id="method" -->
