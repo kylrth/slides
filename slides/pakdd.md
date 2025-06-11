@@ -211,7 +211,6 @@ This dataset is a good test of our system's ability to produce good results for 
 <img src="pakdd/aag_diagram.png" alt="AAG system design using query re-writing, summarization, and self-critique" style="background-color:#FFFFFF;" />
 
 ----
-<!-- .slide: id="method" -->
 <!-- .slide: data-auto-animate -->
 
 ## ## pipeline
